@@ -12,6 +12,7 @@ import Like from "../Like";
 const Favorites = (props) => {
   const dispatch = useDispatch();
   let [charactersList, setCharacterList] = useState([]);
+  let [search, setSearch] = useState("");
   let [likesList, setLikesList] = useState([]);
   const { list: favorites } = useSelector((state) => state.likes);
 
@@ -30,50 +31,61 @@ const Favorites = (props) => {
 
   return (
     <div>
-      <h1>Favorites</h1>
-
       {favorites.length === 0 ? (
         <>
           <h1 className="text-xs m-4">Empty List you need to select a fav</h1>
           <hr className="solid m-8 " />
-
-          <Characters />
+          <div className="opacity-80">
+            <Characters />
+          </div>
         </>
       ) : (
-        <ul className="text-xs">
-          {favorites.map((character, index) => (
-            <div>
-              <li key={character.id}>
-                <div className="flex flex-row justify-between my-2 mx-6">
-                  <div>
-                    <p>{character.name} </p>
-                    <span className="font-thin">
-                      {character.gender} | {character.birth_year}
-                    </span>
-                    <div className="flex flex-row bg-slate-700 rounded items-center align-center justify-center">
-                      <MapPinIcon className="h-3 w-3" />
-                      <span> {character.homeworld}</span>
+        <>
+          <input
+            type="text"
+            placeholder="Search"
+            className="border border-gray-300 rounded-md p-2 m-4 bg-gray-900 text-white p-2 text-xs w-5/6"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <ul className="text-xs">
+            {favorites
+              .filter((favorite) =>
+                favorite.name.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((character, index) => (
+                <div>
+                  <li key={character.id}>
+                    <div className="flex flex-row justify-between my-2 mx-6">
+                      <div>
+                        <p>{character.name} </p>
+                        <span className="font-thin">
+                          {character.gender} | {character.birth_year}
+                        </span>
+                        <div className="flex flex-row bg-slate-700 rounded items-center align-center justify-center">
+                          <MapPinIcon className="h-3 w-3" />
+                          <span> {character.homeworld}</span>
+                        </div>
+                      </div>
+                      <div>
+                        <Like
+                          isLiked={
+                            favorites.filter(
+                              (favorite) => favorite.id === character.id
+                            ).length > 0
+                              ? true
+                              : false
+                          }
+                          character={character}
+                          onLike={onLike}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <Like
-                      isLiked={
-                        favorites.filter(
-                          (favorite) => favorite.id === character.id
-                        ).length > 0
-                          ? true
-                          : false
-                      }
-                      character={character}
-                      onLike={onLike}
-                    />
-                  </div>
+                    <hr className="solid" />
+                  </li>
                 </div>
-                <hr className="solid" />
-              </li>
-            </div>
-          ))}
-        </ul>
+              ))}
+          </ul>
+        </>
       )}
     </div>
   );

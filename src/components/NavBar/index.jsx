@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import Logo from "../Logo";
 import "./style.css"; // hamburger menu
 
-export default function NavBar() {
+export default function NavBar(props) {
+  const { title } = props;
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   return (
@@ -57,6 +58,8 @@ export default function NavBar() {
           </li>
         </ul>
       </nav>
+      <span className="text-white text-1xl">{title}</span>
+
       <a href="/">
         <Logo />
       </a>
