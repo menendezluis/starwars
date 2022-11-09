@@ -15,13 +15,10 @@ export const routes = createBrowserRouter([
     element: <CharactersPage />,
     errorElement: <ErrorPage />,
   },
+
   {
     path: "/favorites",
     element: <FavoritesPage />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: "*",
-    element: <ErrorPage />,
   },
 ]);

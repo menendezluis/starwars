@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Logo from "../Logo";
 import "./style.css"; // hamburger menu
 
@@ -49,10 +50,10 @@ export default function NavBar() {
 
         <ul className="DESKTOP-MENU hidden text-white space-x-8 lg:flex">
           <li>
-            <a href="/about">Characters</a>
+            <Link to="/characters">Characters</Link>
           </li>
           <li>
-            <a href="/portfolio">Favorites</a>
+            <Link to="/favorites">Favorites</Link>
           </li>
         </ul>
       </nav>
