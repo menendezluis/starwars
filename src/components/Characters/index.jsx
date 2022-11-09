@@ -1,31 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { HeartIcon, MapPinIcon } from "@heroicons/react/24/outline";
-import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
+import { MapPinIcon } from "@heroicons/react/24/outline";
 
 import { useDispatch, useSelector } from "react-redux";
 import { characterSlice } from "../../slices/characterSlice";
 import { fetchcharactersList } from "../../slices/characterSlice";
+import { addLike, removeLike } from "../../slices/likeSlice";
+
+import Like from "../Like";
 
 const Characters = (props) => {
   const dispatch = useDispatch();
   let [charactersList, setCharacterList] = useState([]);
+  let [likesList, setLikesList] = useState([]);
   const { list: characters } = useSelector((state) => state.characters);
+  const { list: favorites } = useSelector((state) => state.likes);
 
   useEffect(() => {
-    dispatch(fetchcharactersList());
-  }, []);
-
-  useEffect(() => {
-    console.log("characters", characters);
     setCharacterList(characters);
   }, [characters]);
 
   //map over charactersList and render each character
+  const likeList = charactersList.map((character, index) => {
+    return index % 2 === 0;
+  });
+  console.log("likeList", favorites);
+
+  const onLike = (character, action) => {
+    if (action === "add") {
+      dispatch(addLike(character));
+    } else {
+      dispatch(removeLike(character));
+    }
+  };
+
   return (
     <div>
       <h1>Characters</h1>
       <ul className="text-xs">
-        {charactersList.map((character) => (
+        {charactersList.map((character, index) => (
           <div>
             <li key={character.id}>
               <div className="flex flex-row justify-between my-2 mx-6">
@@ -40,7 +52,17 @@ const Characters = (props) => {
                   </div>
                 </div>
                 <div>
-                  <HeartIcon className="h-3 w-3" />
+                  <Like
+                    isLiked={
+                      favorites.filter(
+                        (favorite) => favorite.id === character.id
+                      ).length > 0
+                        ? true
+                        : false
+                    }
+                    character={character}
+                    onLike={onLike}
+                  />
                 </div>
               </div>
               <hr className="solid" />
