@@ -33,6 +33,8 @@ const Characters = (props) => {
     }
   };
 
+  //g
+
   return (
     <div>
       <h1>Characters</h1>
@@ -55,7 +57,7 @@ const Characters = (props) => {
                   <Like
                     isLiked={
                       favorites.filter(
-                        (favorite) => favorite.id === character.id
+                        (favorite) => favorite.name === character.name
                       ).length > 0
                         ? true
                         : false
