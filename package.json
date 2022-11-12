@@ -1,4 +1,5 @@
 {
+  "homepage":"https://menendezluis.github.io/starwars/ya",
   "name": "starwars",
   "private": true,
   "version": "0.0.0",
@@ -17,7 +18,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router": "2.2.0",
-    "react-router-dom": "^6.4.3",
+    "react-router-dom": "^6.4.3",s
     "react-router-redux": "4.0.0",
     "react-semantify": "^0.6.0",
     "redux": "^4.2.0"
